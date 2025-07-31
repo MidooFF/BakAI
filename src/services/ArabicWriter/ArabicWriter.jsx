@@ -132,8 +132,14 @@ const ArabicWriter = () => {
       </a>
 
       {requested ? (
-        loading ? (
+        true ? (
           <div id="arabic-writer-response" className="loading">
+            <div className="short"></div>
+            <div></div>
+            <div></div>
+            <div className="short"></div>
+            <div></div>
+            <div></div>
             <div className="short"></div>
             <div></div>
             <div></div>

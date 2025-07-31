@@ -124,7 +124,7 @@
 }
 
 .loading div {
-    @apply w-full h-[10px] bg-gray-400 rounded-[5px] mt-[20px] relative overflow-hidden 
+    @apply w-full h-[15px] bg-gray-400 rounded-[15px] mt-[20px] relative overflow-hidden 
 }
 
 .loading div::before {
