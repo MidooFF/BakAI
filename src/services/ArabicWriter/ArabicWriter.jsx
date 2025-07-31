@@ -12,6 +12,8 @@ const ArabicWriter = () => {
   const { data, loading, error, fetchData } = useFetch();
   const [requested, setRequested] = useState(false);
 
+  console.log(error);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
