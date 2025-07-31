@@ -1,0 +1,23 @@
+@import "tailwindcss";
+
+.services-container  {
+    @apply grid pt-[60px] max-sm:pt-[40px];
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.service {
+    @apply bg-white text-center rounded-[15px] pb-[20px] pt-[30px] relative cursor-pointer
+}
+
+.service p {
+    @apply text-[25px]
+}
+
+.service .service-icon {
+    @apply absolute w-[50px] h-[50px] top-[0] left-[50%] rounded-[15px];
+    @apply translate-y-[-50%] translate-x-[-50%] flex justify-center items-center;
+}
+
+.service .service-icon svg {
+    @apply text-white font-bold text-[30px]
+}

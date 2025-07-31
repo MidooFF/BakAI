@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+.nav {
+    @apply flex justify-between items-center fixed w-full bg-white z-999 top-0;
+}
+
+.nav .logo {
+    @apply flex-1 flex justify-end
+}
+
+.nav .logo img{
+    @apply h-[60px] max-sm:h-[40px]
+}
+
+.nav .links {
+    @apply flex-1 flex justify-start
+}
+
+.nav .links a {
+    @apply py-[30px] max-sm:py-[15px] text-[20px] relative duration-300  ;
+}
+
+
+
+.nav .links a:hover::before {
+    width: 100%;
+}
+
+.nav .links a::before {
+    content: "";
+    @apply w-0 h-[4px] absolute left-0 bottom-0 rounded-[10px] duration-300;
+    background: #ff00ea;
+    background: linear-gradient(90deg, rgba(255, 0, 234, 1) 0%, rgba(81, 0, 255, 1) 100%);
+   
+}
+
+.nav .links a.active::before {
+    width: 100%;
+}
