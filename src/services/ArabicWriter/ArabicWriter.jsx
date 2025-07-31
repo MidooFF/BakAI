@@ -12,8 +12,6 @@ const ArabicWriter = () => {
   const { data, loading, error, fetchData } = useFetch();
   const [requested, setRequested] = useState(false);
 
-  console.log(data ? data.split("<div>").join().split("</div>") : "");
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -26,7 +24,7 @@ const ArabicWriter = () => {
         (item, index) =>
           `الفكرة ${index + 1}: ${item[0]}, شاهدها: ${item[1]}, الشاعر: ${
             item[2]
-          }, اجعل كل شاهد في نهاية كل فكرة واذكر قبل كل شاهد شاعره (كما يقول الشاعر :) لا تضع عنوان للموضوع وأرسل الإجابة بهيئة HTML Elements حيث تكون المقدمة في عنصر والخاتمة في عنصر وكل فكرة في عنصر div فقط بدون أي عنصر أخر`
+          }, اجعل كل شاهد في نهاية كل فكرة واذكر قبل كل شاهد شاعره (كما يقول الشاعر :) لا تضع عنوان للموضوع وأرسل الإجابة بهيئة HTML Elements حيث تكون المقدمة في عنصر والخاتمة في عنصر وكل فكرة في عنصر div`
       )}`;
       fetchData(content);
       setRequested(true);
@@ -132,7 +130,7 @@ const ArabicWriter = () => {
       </a>
 
       {requested ? (
-        true ? (
+        loading ? (
           <div id="arabic-writer-response" className="loading">
             <div className="short"></div>
             <div></div>
@@ -158,13 +156,12 @@ const ArabicWriter = () => {
               .split("<div>")
               .join()
               .split("</div>")
-              //   .join("||")
+              .join("")
               //   .split(",")
               //   .join("||")
-              //   .split("<p>")
-              //   .join("||")
-              //   .split("</p>")
-              //   .join("||")
+              .split("<p>")
+              .join("")
+              .split("</p>")
               //   .split("<section>")
               //   .join("||")
               //   .split("</section>")
