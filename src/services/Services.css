@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+.container {
+    @apply pt-[40px] relative
+}
+
+.header {
+    @apply text-[40px] max-sm:text-[20px]
+}
+
+.main-form {
+    @apply flex items-center py-[20px] max-sm:flex-col max-sm:items-start
+}
+
+.main-form h2 {
+    @apply text-[20px] ml-[15px];
+}
+
+.generate {
+    @apply block w-fit mx-[auto] mt-[10px] py-[5px] px-[10px] text-white ;
+    @apply text-[20px] tracking-[1.5px] rounded-[15px] cursor-pointer;
+}
+
+.generate.disapper {
+    animation-name: disapper-button;
+    animation-duration: 500ms;
+    animation-fill-mode: both;
+}
+.loading {
+    padding-top: 100px
+}
+
+.loading div {
+    @apply w-full h-[15px] bg-gray-400 rounded-[15px] mt-[20px] relative overflow-hidden 
+}
+
+.loading div::before {
+    content: "";
+    background: #ffffff;
+    background: linear-gradient(360deg,rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 50%, rgba(255, 255, 255, 0) 99%);
+    width: 50%;
+    height: 80px;
+    position: absolute;
+    left: -100%;
+    bottom: -100%;
+    transform: rotate(45deg);
+    animation-name: loading;
+    animation-duration: 2000ms;
+    animation-iteration-count: infinite;
+}
+.loading div.short {
+    @apply w-[60%]
+}
+
+@keyframes loading {
+    from {
+        left: 100%
+    }
+    to {
+        left: -100%;
+    }
+}

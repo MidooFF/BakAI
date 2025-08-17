@@ -1,5 +1,6 @@
 import React, { useRef, useState, useEffect, createRef } from "react";
 import "./ArabicWriter.css";
+import "../Services.css";
 import useFetch from "../../hooks/useFetch";
 
 const ArabicWriter = () => {
@@ -42,7 +43,7 @@ const ArabicWriter = () => {
         {inputError}
       </div>
       <h1 className="header fade-in fade-in-1">كتابة موضوع تعبير</h1>
-      <div className="main-idea fade-in fade-in-2">
+      <div className="main-form fade-in fade-in-2">
         <h2 className="">الفكرة العامة: </h2>
         <div className="main-input">
           <input ref={mainIdea} />
@@ -84,9 +85,8 @@ const ArabicWriter = () => {
           : null}
       </div>
       <button
-        className={`add-sub-idea shadow-0 fade-in fade-in-3  ${
-          requested ? "disapper" : ""
-        }`}
+        className={`add-sub-idea shadow-0 fade-in fade-in-3`}
+        disabled={requested}
         onClick={() => {
           setSubIdeas((prev) => [...prev, subIdeas.length]);
         }}
@@ -95,9 +95,8 @@ const ArabicWriter = () => {
       </button>
       <a href="#arabic-writer-response">
         <button
-          className={`generate gradient fade-in fade-in-4 ${
-            requested ? "disapper" : ""
-          }`}
+          className={`generate gradient fade-in fade-in-4 `}
+          disabled={requested}
           onClick={() => {
             if (!mainIdea.current.value) {
               setInputError("يجب إدخال الفكرة الأساسية");
@@ -151,7 +150,7 @@ const ArabicWriter = () => {
             <div></div>
           </div>
         ) : error ? (
-          <div id="arabic-writer-response">Error</div>
+          <div id="arabic-writer-response">{error}</div>
         ) : data ? (
           <div className="response" id="arabic-writer-response">
             {data

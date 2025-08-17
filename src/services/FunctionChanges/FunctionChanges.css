@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+.shortcuts {
+    @apply flex gap-[5px] mr-[5px];
+}
+
+.shortcuts button {
+    @apply w-[20px] text-[20px] bg-[#ddd] rounded-[5px] cursor-pointer
+}
+

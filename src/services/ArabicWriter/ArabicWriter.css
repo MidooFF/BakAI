@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
-.container {
+/* .container {
     @apply pt-[40px] relative
-}
+} */
 
-.header {
+/* .header {
     @apply text-[40px] max-sm:text-[20px]
-}
+} */
 
 .main-idea {
     @apply flex items-center py-[20px] max-sm:flex-col max-sm:items-start
@@ -68,9 +68,11 @@
 @keyframes add-idea {
     from {
         height: 0;
+        padding-bottom: 0;
     }
     to {
         height: 125px;
+        padding-bottom: 20px;
     }
 }
 @keyframes add-idea-mobile {
@@ -157,15 +159,15 @@
 @keyframes disapper-button {
     0% {
         opacity: 1;
-        display: block
+        visibility: visible
     }
     99% {
         opacity: 0;
-        display: block
+        visibility: visible
     }
     100% {
         opacity: 0;
-        display: none;
+        visibility: hidden
     }
 }
 

@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
-import { TfiWrite } from "react-icons/tfi";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
+import { TbMathFunction } from "react-icons/tb";
+import { TfiWrite } from "react-icons/tfi";
 
 const Home = () => {
   useEffect(() => {
@@ -20,6 +21,17 @@ const Home = () => {
           <TfiWrite />
         </div>
         <p className="service-name">كتابة موضوع تعبير</p>
+      </div>
+      <div
+        onClick={() => {
+          navigate("/function-changes");
+        }}
+        className="service shadow-1 fade-in fade-in-2"
+      >
+        <div className="service-icon shadow-0 gradient">
+          <TbMathFunction />
+        </div>
+        <p className="service-name">دراسة تغيرات التابع</p>
       </div>
     </div>
   );
