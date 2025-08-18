@@ -23,12 +23,12 @@ const FunctionChanges = () => {
   }, [func]);
 
   return (
-    <div className="container section-padding">
+    <div className="container section-padding func-changes-container">
       <h1 className="header fade-in fade-in-1">دراسة تغيرات التابع</h1>
 
-      <div className="main-form fade-in fade-in-2">
+      <div className="main-form fade-in fade-in-2 max-sm:flex-row">
         <h2 className="mb-[10px]">التابع:</h2>
-        <div className="flex gap-[10px]">
+        <div className="flex gap-[10px] ">
           <div className="main-input">
             <input dir="ltr" ref={functionRef} />
             <div></div>
