@@ -16,7 +16,7 @@ const FunctionChanges = () => {
     if (func.length > 0) {
       console.log("Hello");
       fetchData(
-        `Study the changes of the function f(x) = ${func} and translate the whole answer to arabic and only show the arabic response and don't combine arabic letters with math equations in one line and separate between every line of solution with ** and if the line is a math equation and don't have an arabic word make it Preceded with # and if the line has more than one equation put ** between every equation and convert the LaTeX code to symbols`
+        `ادرس تغيرات التابع f(x) = ${func} بدون جدول التغيرات , افصل بين كل سطر ب ** ويكون هناك نوعين من الأسطر, سطر للكلمات والشرح باللغة العربية, هذا النوع لا تدخل فيه أي رموز رياضية او حسابات, والنوع الأخر اجعله مخصصا فقط للمعادلات والعبارات الرياضية, لا تدخل فيه أي كلمة عربية واجعله مبدوئا ب#. و حول العبارات الرياضية المكتوبة بصيغة الKaTeX الى نص طبيعي, لا تذكر أي شيء من الأوامر من الprompt في الresponse`
       );
       setRequested(true);
     }
@@ -105,9 +105,35 @@ const FunctionChanges = () => {
             {data.split("**").map((item, index) => (
               <div key={index} lang="ar" className="p-[10px, 0]">
                 {item.includes("#") ? (
-                  <h4 dir="ltr">{item.replace("#", " ")}</h4>
+                  <h4 dir="ltr">
+                    {item.split("#").map((it, ind) => (
+                      <p key={ind}>
+                        <br />
+                        {it
+                          .replaceAll("-infinity", "-∞")
+                          .replaceAll("+infinity", "+∞")
+                          .replaceAll("^-", "⁻")
+                          .replaceAll("^+", "⁺")
+                          .replaceAll("->", "→")
+                          .replaceAll("^2", "²")
+                          .replaceAll("^3", "³")
+                          .replaceAll("sqrt", "√")}
+                      </p>
+                    ))}
+                  </h4>
                 ) : (
-                  <h4 className="eq">{item}</h4>
+                  <h4 className="eq">
+                    {item
+                      .replaceAll("-infinity", "-∞")
+                      .replaceAll("+infinity", "+∞")
+                      .replaceAll("^-", "⁻")
+                      .replaceAll("^+", "⁺")
+                      .replaceAll("->", "→")
+                      .replaceAll("^2", "²")
+                      .replaceAll("^3", "³")
+                      .replaceAll("sqrt", "√")}
+                    }
+                  </h4>
                 )}
               </div>
             ))}

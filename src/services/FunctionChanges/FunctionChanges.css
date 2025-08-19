@@ -11,3 +11,7 @@
 .func-changes-container .main-form {
     flex-direction: row;
 }
+
+.function-changes-response .eq {
+    margin-top: -10px
+}

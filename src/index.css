@@ -15,8 +15,8 @@ html {
 }
 
 body {
-  height: 1000vh;
   padding-top: 90px;
+  padding-bottom: 200px;
 }
 
 @theme {
