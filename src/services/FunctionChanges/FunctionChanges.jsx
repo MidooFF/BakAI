@@ -132,7 +132,6 @@ const FunctionChanges = () => {
                       .replaceAll("^2", "²")
                       .replaceAll("^3", "³")
                       .replaceAll("sqrt", "√")}
-                    }
                   </h4>
                 )}
               </div>
