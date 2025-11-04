@@ -12,6 +12,10 @@
     @apply h-[60px] max-sm:h-[40px]
 }
 
+.nav .logo .logo-text{
+    background-clip: text;
+}
+
 .nav .links {
     @apply flex-1 flex justify-start
 }

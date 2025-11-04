@@ -13,7 +13,7 @@ const Home = () => {
     <div className="services-container section-padding">
       <div
         onClick={() => {
-          navigate("/arabic-writer");
+          navigate("arabic-writer");
         }}
         className="service shadow-1 fade-in fade-in-1"
       >
@@ -24,7 +24,7 @@ const Home = () => {
       </div>
       <div
         onClick={() => {
-          navigate("/function-changes");
+          navigate("function-changes");
         }}
         className="service shadow-1 fade-in fade-in-2"
       >

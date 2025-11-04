@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+.handle-error {
+    @apply bg-red-200 text-red-600 w-fit py-[2px] px-[5px] rounded-[10px] mt-[10px] translate-y-[15px] duration-300 opacity-0
+    max-sm:text-[15px]
+}
+
+.handle-error.active {
+    @apply translate-y-0 opacity-100
+}
+
+.handle-error.disactive {
+    @apply translate-y-[15px] opacity-0
+}
+
