@@ -3,6 +3,7 @@ import "./Login.css";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
+import { OrbitProgress, ThreeDot } from "react-loading-indicators";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -117,7 +118,7 @@ const Login = () => {
             onClick={handleLogin}
             className={`gradient text-white text-2xl ext-center p-[10px] mt-[60px] rounded-[10px]
         cursor-pointer max-sm:text-[20px] max-sm:mt-[30px] font-bold ${
-          loading ? "opacity-80" : ""
+          loading ? "opacity-70" : ""
         }`}
           >
             تسجيل الدخول
