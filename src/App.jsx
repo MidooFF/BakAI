@@ -4,17 +4,19 @@ import Navbar from "./components/Navbar/Navbar";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Home from "./services/Home/Home.jsx";
 import ArabicWriter from "./services/ArabicWriter/ArabicWriter.jsx";
+import ArabicWriterWrapper from "./services/ArabicWriter/ArabicWrapper.jsx";
 import FunctionChanges from "./services/FunctionChanges/FunctionChanges.jsx";
+import FunctionChangesWrapper from "./services/FunctionChanges/FunctionChangesWrapper.jsx";
 import Login from "./components/Login/Login.jsx";
 import SignUp from "./components/SignUp/SignUp.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
 import { Atom } from "react-loading-indicators";
+import { BlackProvider } from "../context/BlackContext.jsx";
 
 function App() {
   const AppRoutes = () => {
     const { isLoggedIn, loading } = useAuth();
-
     if (loading) {
       return (
         <div className="w-[100vw] h-[100vh] relative">
@@ -46,11 +48,11 @@ function App() {
           <Route path="/services" element={<Home />}></Route>
           <Route
             path="/services/arabic-writer"
-            element={<ArabicWriter />}
+            element={<ArabicWriterWrapper />}
           ></Route>
           <Route
             path="/services/function-changes"
-            element={<FunctionChanges />}
+            element={<FunctionChangesWrapper />}
           ></Route>
         </Routes>
       </>
@@ -59,7 +61,9 @@ function App() {
   return (
     <>
       <AuthProvider>
-        <AppRoutes></AppRoutes>
+        <BlackProvider>
+          <AppRoutes></AppRoutes>
+        </BlackProvider>
       </AuthProvider>
     </>
   );

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .nav {
-    @apply flex justify-between items-center fixed w-full bg-white z-999 top-0;
+    @apply flex justify-between items-center fixed w-full bg-white z-10 top-0;
 }
 
 .nav .logo {

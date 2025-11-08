@@ -2,6 +2,9 @@ import React, { useRef, useState, useEffect, createRef } from "react";
 import "./ArabicWriter.css";
 import "../Services.css";
 import useFetch from "../../hooks/useFetch";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { useInfo } from "../../../context/InfoContext";
+import { useBlack } from "../../../context/BlackContext";
 
 const ArabicWriter = () => {
   const mainIdea = useRef();
@@ -12,7 +15,8 @@ const ArabicWriter = () => {
   const inputErrorRef = useRef();
   const { data, loading, error, fetchData } = useFetch();
   const [requested, setRequested] = useState(false);
-
+  const { toggleInfo } = useInfo();
+  const { toggleBlack } = useBlack();
   console.log(error);
 
   useEffect(() => {
@@ -35,145 +39,169 @@ const ArabicWriter = () => {
   }, [subIdeasData]);
 
   return (
-    <div className="container section-padding">
-      <div
-        className={`error ${inputError ? "active" : ""}`}
-        ref={inputErrorRef}
-      >
-        {inputError}
-      </div>
-      <h1 className="header fade-in fade-in-1">كتابة موضوع تعبير</h1>
-      <div className="main-form fade-in fade-in-2">
-        <h2 className="">الفكرة العامة: </h2>
-        <div className="main-input">
-          <input ref={mainIdea} />
-          <div></div>
+    <>
+      <div className="container section-padding">
+        <div
+          className={`error ${inputError ? "active" : ""}`}
+          ref={inputErrorRef}
+        >
+          {inputError}
         </div>
-      </div>
-      <div className="sub-ideas" ref={subIdeasRef}>
-        {subIdeas
-          ? subIdeas.map((item, index) => {
-              return (
-                <div className="sub-idea" key={index}>
-                  <div className="main">
-                    <h2>الفكرة {index + 1}:</h2>
-                    <div className="main-input">
-                      <input />
-                      <div></div>
-                    </div>
-                  </div>
-                  <div className="others">
-                    <div className="witness">
-                      {" "}
-                      <h2>الشاهد :</h2>
-                      <div className="main-input">
-                        <input />
-                        <div></div>
-                      </div>
-                    </div>
-                    <div className="poet">
-                      <h2>الشاعر :</h2>
-                      <div className="main-input">
-                        <input />
-                        <div></div>
-                      </div>
-                    </div>
-                  </div>
+        <div className="flex fade-in fade-in-1 justify-start max-sm:justify-between items-center">
+          <h1 className="header  ml-[20px] max-sm:ml-[5px]">
+            كتابة موضوع تعبير
+          </h1>
+          <IoInformationCircleOutline
+            className="text-2xl text-gray-500 cursor-pointer"
+            onClick={() => {
+              toggleInfo(
+                <div>
+                  <p>يجب إدخال الفكرة العامة</p>
+                  <p>مثال: القضايا الوطنية والقومية</p>
+                  <br></br>
+                  <p>يجب إدخال فكرة فرعية واحدة على الأقل</p>
+                  <p>مثال: </p>
+                  <p>الفكرة1: الفرح بيوم الجلاء,</p>
+                  <p>الشاهد: يا عروس المجد تيهي واسحبي في مغانيا ذيول الشهب </p>
+                  <p>الشاعر: عمر أبو ريشة</p>
                 </div>
               );
-            })
-          : null}
-      </div>
-      <button
-        className={`add-sub-idea shadow-0 fade-in fade-in-3`}
-        disabled={requested}
-        onClick={() => {
-          setSubIdeas((prev) => [...prev, subIdeas.length]);
-        }}
-      >
-        أضف فكرة فرعية +
-      </button>
-      <a href="#arabic-writer-response">
+            }}
+          />
+        </div>
+
+        <div className="main-form fade-in fade-in-2">
+          <h2 className="">الفكرة العامة: </h2>
+          <div className="main-input">
+            <input ref={mainIdea} />
+            <div></div>
+          </div>
+        </div>
+        <div className="sub-ideas" ref={subIdeasRef}>
+          {subIdeas
+            ? subIdeas.map((item, index) => {
+                return (
+                  <div className="sub-idea" key={index}>
+                    <div className="main">
+                      <h2>الفكرة {index + 1}:</h2>
+                      <div className="main-input">
+                        <input />
+                        <div></div>
+                      </div>
+                    </div>
+                    <div className="others">
+                      <div className="witness">
+                        {" "}
+                        <h2>الشاهد :</h2>
+                        <div className="main-input">
+                          <input />
+                          <div></div>
+                        </div>
+                      </div>
+                      <div className="poet">
+                        <h2>الشاعر :</h2>
+                        <div className="main-input">
+                          <input />
+                          <div></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            : null}
+        </div>
         <button
-          className={`generate gradient fade-in fade-in-4 `}
+          className={`add-sub-idea shadow-0 fade-in fade-in-3`}
           disabled={requested}
           onClick={() => {
-            if (!mainIdea.current.value) {
-              setInputError("يجب إدخال الفكرة الأساسية");
-            } else if (subIdeasRef.current.children.length == 0) {
-              setInputError("يجب إدخال فكرة واحدة على الأقل");
-            } else {
-              for (let i = 0; i < subIdeasRef.current.children.length; i++) {
-                let mainIdea =
-                  subIdeasRef.current.children[i].children[0].children[1]
-                    .children[0].value;
-                let witness =
-                  subIdeasRef.current.children[i].children[1].children[0]
-                    .children[1].children[0].value;
-                let poet =
-                  subIdeasRef.current.children[i].children[1].children[1]
-                    .children[1].children[0].value;
-                if (!mainIdea || !witness || !poet) {
-                  setInputError("يجب إدخال كل مدخلات الفكرة");
-                } else {
-                  setInputError("");
-                  setSubIdeasData((prev) => [
-                    ...prev,
-                    [mainIdea, witness, poet],
-                  ]);
-                }
-              }
-            }
+            setSubIdeas((prev) => [...prev, subIdeas.length]);
           }}
         >
-          Generate
+          أضف فكرة فرعية +
         </button>
-      </a>
+        <a href="#arabic-writer-response">
+          <button
+            className={`generate gradient fade-in fade-in-4 `}
+            disabled={requested}
+            onClick={() => {
+              if (!mainIdea.current.value) {
+                setInputError("يجب إدخال الفكرة الأساسية");
+              } else if (subIdeasRef.current.children.length == 0) {
+                setInputError("يجب إدخال فكرة واحدة على الأقل");
+              } else {
+                for (let i = 0; i < subIdeasRef.current.children.length; i++) {
+                  let mainIdea =
+                    subIdeasRef.current.children[i].children[0].children[1]
+                      .children[0].value;
+                  let witness =
+                    subIdeasRef.current.children[i].children[1].children[0]
+                      .children[1].children[0].value;
+                  let poet =
+                    subIdeasRef.current.children[i].children[1].children[1]
+                      .children[1].children[0].value;
+                  if (!mainIdea || !witness || !poet) {
+                    setInputError("يجب إدخال كل مدخلات الفكرة");
+                  } else {
+                    setInputError("");
+                    setSubIdeasData((prev) => [
+                      ...prev,
+                      [mainIdea, witness, poet],
+                    ]);
+                  }
+                }
+              }
+            }}
+          >
+            Generate
+          </button>
+        </a>
 
-      {requested ? (
-        loading ? (
-          <div id="arabic-writer-response" className="loading">
-            <div className="short"></div>
-            <div></div>
-            <div></div>
-            <div className="short"></div>
-            <div></div>
-            <div></div>
-            <div className="short"></div>
-            <div></div>
-            <div></div>
-            <div className="short"></div>
-            <div></div>
-            <div></div>
-            <div className="short"></div>
-            <div></div>
-            <div></div>
-          </div>
-        ) : error ? (
-          <div id="arabic-writer-response">{error}</div>
-        ) : data ? (
-          <div className="response" id="arabic-writer-response">
-            {data
-              .split("<div>")
-              .join()
-              .split("</div>")
-              .join("")
-              //   .split(",")
-              //   .join("||")
-              .split("<p>")
-              .join("")
-              .split("</p>")
-              //   .split("<section>")
-              //   .join("||")
-              //   .split("</section>")
-              //   .split("||")
-              .map((item, index) => (
-                <div key={index}>{item}</div>
-              ))}
-          </div>
-        ) : null
-      ) : null}
-    </div>
+        {requested ? (
+          loading ? (
+            <div id="arabic-writer-response" className="loading">
+              <div className="short"></div>
+              <div></div>
+              <div></div>
+              <div className="short"></div>
+              <div></div>
+              <div></div>
+              <div className="short"></div>
+              <div></div>
+              <div></div>
+              <div className="short"></div>
+              <div></div>
+              <div></div>
+              <div className="short"></div>
+              <div></div>
+              <div></div>
+            </div>
+          ) : error ? (
+            <div id="arabic-writer-response">{error}</div>
+          ) : data ? (
+            <div className="response" id="arabic-writer-response">
+              {data
+                .split("<div>")
+                .join()
+                .split("</div>")
+                .join("")
+                //   .split(",")
+                //   .join("||")
+                .split("<p>")
+                .join("")
+                .split("</p>")
+                //   .split("<section>")
+                //   .join("||")
+                //   .split("</section>")
+                //   .split("||")
+                .map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))}
+            </div>
+          ) : null
+        ) : null}
+      </div>
+    </>
   );
 };
 

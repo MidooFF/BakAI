@@ -3,6 +3,8 @@ import parse from "html-react-parser";
 import "./FunctionChanges.css";
 import "../Services.css";
 import useFetch from "../../hooks/useFetch";
+import { useInfo } from "../../../context/InfoContext";
+import { IoInformationCircleOutline } from "react-icons/io5";
 
 // study the changes of f(x) = (2x² + x + 7)/(x+1) and organize a table of them and translate the whole answer to arabic without showing the english response
 const FunctionChanges = () => {
@@ -10,11 +12,9 @@ const FunctionChanges = () => {
   const [func, setFunc] = useState("");
   const { data, loading, error, fetchData } = useFetch();
   const [requested, setRequested] = useState(false);
-  console.log(data);
-
+  const { toggleInfo } = useInfo();
   useEffect(() => {
     if (func.length > 0) {
-      console.log("Hello");
       fetchData(
         `ادرس تغيرات التابع f(x) = ${func} بدون جدول التغيرات , افصل بين كل سطر ب ** ويكون هناك نوعين من الأسطر, سطر للكلمات والشرح باللغة العربية, هذا النوع لا تدخل فيه أي رموز رياضية او حسابات, والنوع الأخر اجعله مخصصا فقط للمعادلات والعبارات الرياضية, لا تدخل فيه أي كلمة عربية واجعله مبدوئا ب#. و حول العبارات الرياضية المكتوبة بصيغة الKaTeX الى نص طبيعي, لا تذكر أي شيء من الأوامر من الprompt في الresponse`
       );
@@ -24,7 +24,32 @@ const FunctionChanges = () => {
 
   return (
     <div className="container section-padding func-changes-container">
-      <h1 className="header fade-in fade-in-1">دراسة تغيرات التابع</h1>
+      <div className="flex fade-in fade-in-1 justify-start max-sm:justify-between items-center">
+        <h1 className="header fade-in fade-in-1">دراسة تغيرات التابع</h1>
+        <IoInformationCircleOutline
+          className="text-2xl text-gray-500 cursor-pointer"
+          onClick={() => {
+            toggleInfo(
+              <div>
+                <p>يجب اختيار اللغة الانكليزية في لوحة المفاتيح </p>
+                <br />
+                <p>استعمال * لعمليات الضرب</p>
+                <p>استعمال / لعمليات القسمة</p>
+                <br />
+                <p>يجب تحديد بسط ومقام كسر بأقواس</p>
+                <p>مثال: </p>
+                <p>اذا كان كسر بسطه x + 1 ومقامه x + 2 يكتب:</p>
+                <p className="ltr">(x+2)/(x+1)</p>
+                <br />
+                <p>يجب تحديد الحد داخل الجذر بأقواس </p>
+                <p>مثال:</p>
+                <p>جذر المقدار x + 1 يكتب:</p>
+                <p>(x+1)√</p>
+              </div>
+            );
+          }}
+        />
+      </div>
 
       <div className="main-form fade-in fade-in-2 max-sm:flex-row">
         <h2 className="mb-[10px]">التابع:</h2>
@@ -36,7 +61,6 @@ const FunctionChanges = () => {
           <div className="shortcuts">
             <button
               onClick={() => {
-                console.log(functionRef.current);
                 functionRef.current.value = functionRef.current.value + "²";
                 functionRef.current.focus();
               }}
@@ -45,7 +69,6 @@ const FunctionChanges = () => {
             </button>
             <button
               onClick={() => {
-                console.log(functionRef.current);
                 functionRef.current.value = functionRef.current.value + "³";
                 functionRef.current.focus();
               }}
@@ -54,7 +77,6 @@ const FunctionChanges = () => {
             </button>
             <button
               onClick={() => {
-                console.log(functionRef.current);
                 functionRef.current.value = functionRef.current.value + "√";
                 functionRef.current.focus();
               }}

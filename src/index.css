@@ -18,6 +18,11 @@ body {
   padding-bottom: 200px;
 }
 
+body.scroll-off {
+  overflow: hidden;
+}
+
+
 @theme {
   --gradient: linear-gradient(90deg, rgba(255, 0, 234, 1) 0%, rgba(81, 0, 255, 1) 100%);
 }
@@ -86,6 +91,46 @@ background: linear-gradient(90deg,rgb(81, 0, 255) 0%,   rgb(255, 0, 234) 100%);
   background: linear-gradient(90deg, rgba(255, 0, 234, 1) 0%, rgba(81, 0, 255, 1) 100%);
   @apply w-0 h-[3px] absolute bottom-0 left-0 duration-300;
 }
+
+.black-on {
+  animation-duration: 300ms;
+  animation-name: black-on;
+  animation-fill-mode: both;
+}
+
+.black-off {
+  animation-duration: 300ms;
+  animation-name: black-off;
+  animation-fill-mode: both;
+}
+
+.info-on {
+  bottom: 0;
+}
+.info-off {
+  bottom: -400px
+}
+
+@keyframes black-on {
+  1% {
+    display: block;
+  }
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes black-off {
+  99% {
+     opacity: 0;
+  }
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
 
 @keyframes fade-in {
   from {

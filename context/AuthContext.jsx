@@ -33,6 +33,7 @@ export const AuthProvider = ({ children }) => {
   };
   const checkAuth = async () => {
     const accessToken = localStorage.getItem("accessToken");
+
     if (!accessToken) {
       setLoading(false);
       setIsLoggedIn(false);
@@ -50,6 +51,7 @@ export const AuthProvider = ({ children }) => {
           withCredentials: true,
         }
       );
+
       setLoading(false);
       setIsLoggedIn(true);
     } catch (err) {
