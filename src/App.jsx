@@ -66,10 +66,6 @@ function App() {
       );
     }
 
-    if (ipError) {
-      return <div>حدث خطأ, الرجاء المحاولة لاحقا</div>;
-    }
-
     if (geoInfo.countryCode == "SY") {
       return <VPN></VPN>;
     }
