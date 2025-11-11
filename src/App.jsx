@@ -42,7 +42,7 @@ function App() {
     const fetchIPInfo = async (ip) => {
       try {
         const response = await fetch(
-          `https:/free.freeipapi.com/api/json/${ip}`
+          `https://free.freeipapi.com/api/json/${ip}`
         );
         const data = await response.json();
         setGeoInfo(data);
