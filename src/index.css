@@ -16,6 +16,7 @@ html {
 body {
   padding-top: 90px;
   padding-bottom: 200px;
+  overscroll-behavior: none;
 }
 
 body.scroll-off {

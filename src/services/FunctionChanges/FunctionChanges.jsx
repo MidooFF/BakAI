@@ -21,6 +21,7 @@ const FunctionChanges = () => {
       setRequested(true);
     }
   }, [func]);
+  console.log(data, loading, error);
 
   return (
     <div className="container section-padding func-changes-container">
@@ -160,7 +161,12 @@ const FunctionChanges = () => {
             ))}
           </div>
         ) : (
-          <div>{error}</div>
+          <div>
+            {error.code === 503
+              ? "السيرفبر غير متوفر بسبب الضغط, حاول مجددا لاحقا"
+              : null}
+            السيرفبر غير متوفر بسبب الضغط, حاول مجددا لاحقا
+          </div>
         )
       ) : null}
     </div>

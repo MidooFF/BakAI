@@ -25,7 +25,7 @@ export function useFetch() {
       });
       setData(response.text);
     } catch (err) {
-      setError(err.message || "Failed to fetch data");
+      setError(err || "Failed to fetch data");
     } finally {
       setLoading(false);
     }

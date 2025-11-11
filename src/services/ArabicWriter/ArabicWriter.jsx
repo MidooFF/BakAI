@@ -17,7 +17,6 @@ const ArabicWriter = () => {
   const [requested, setRequested] = useState(false);
   const { toggleInfo } = useInfo();
   const { toggleBlack } = useBlack();
-  console.log(error);
 
   useEffect(() => {
     window.scrollTo(0, 0);
