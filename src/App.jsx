@@ -41,7 +41,9 @@ function App() {
 
     const fetchIPInfo = async (ip) => {
       try {
-        const response = await fetch(`http://ip-api.com/json/${ip}`);
+        const response = await fetch(
+          `https:/free.freeipapi.com/api/json/${ip}`
+        );
         const data = await response.json();
         setGeoInfo(data);
         setIpLoading(false);
