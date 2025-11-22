@@ -5,7 +5,7 @@ import "../Services.css";
 import useFetch from "../../hooks/useFetch";
 import { useInfo } from "../../../context/InfoContext";
 import { IoInformationCircleOutline } from "react-icons/io5";
-
+import { InlineMath, BlockMath } from "react-katex";
 // study the changes of f(x) = (2x² + x + 7)/(x+1) and organize a table of them and translate the whole answer to arabic without showing the english response
 const FunctionChanges = () => {
   const functionRef = useRef();
@@ -16,12 +16,101 @@ const FunctionChanges = () => {
   useEffect(() => {
     if (func.length > 0) {
       fetchData(
-        `ادرس تغيرات التابع ${func} بحيث: 1- احسب مجال التابع, 2- أوجد نهايات التابع عند أطراف مجموعة تعريفه واستنتج المقاربات الأفقية والشاقولية والمائلة إن وجدت وادرس الوضع النسبي بينها, 3-أوجد المشتق الأول للتابع ونظم تغيراته`
+        `حلل تغيرات التابع ${func} باللغة العربية. التزم بالتعليمات التالية بدقة تامة:
+
+1.  **التنسيق الرياضي:**
+    *   استخدم & قبل وبعد أي **رمز رياضي أو تعبير جبري قصير** مدمج في سياق الجملة. أمثلة: &R&, &−∞&, &x = 0&, &f(0) = -4&, &(-∞, 0)&, &f'(x) > 0&.
+    *   استخدم $ قبل وبعد أي **معادلة أو صيغة رياضية رئيسية** تحتاج سطراً مستقلاً (مثل النهايات، إيجاد المشتقة الرئيسية، مقارنات).
+    *   **هام:** إذا كانت الصيغة الرياضية (مثل المشتقة &f'(x) = 3x^2&) قصيرة ويمكن دمجها في جملة، استخدم & بدلاً من $. استخدم $ فقط للصيغ التي تتطلب سطرها الخاص.
+    *   لا تستخدم أي علامات أو تنسيقات أخرى.
+
+2.  **المحتوى المطلوب:**
+    *   أ) نهايات التابع عند الأطراف المفتوحة وصوره عند الأطراف المغلقة.
+    *   ب) استنتاج المقاربات (أفقية، شاقولية، مائلة) ودراسة الوضع النسبي.
+    *   ج) إيجاد مشتق التابع ودراسة تغيراته (تزايد، تناقص، قيم قصوى) **بدون** جدول.
+
+3.  **مثال للإخراج (افترض ${func} = x^3 - 8):**`
       );
       setRequested(true);
     }
   }, [func]);
-  console.log(data, loading, error);
+  const processTextFormatting = (text) => {
+    if (!text) return null;
+
+    // Split by ** for main titles
+    return text.split(/\*\*(.*?)\*\*/).map((segment, index) => {
+      if (index % 2 === 1) {
+        // This is a main title (between **)
+        return (
+          <h3 key={index} className="main-title">
+            {segment}
+          </h3>
+        );
+      } else {
+        // Process the remaining text for * markers
+        return segment.split(/\*(.*?)\*/).map((subSegment, subIndex) => {
+          if (subIndex % 2 === 1) {
+            // This is a sub title (between *)
+            return (
+              <h4 key={`${index}-${subIndex}`} className="sub-title">
+                {subSegment}
+              </h4>
+            );
+          } else {
+            // Regular text
+            return <span key={`${index}-${subIndex}`}>{subSegment}</span>;
+          }
+        });
+      }
+    });
+  };
+
+  // Function to render text with mixed Arabic and math expressions
+  const renderMixedContent = (text) => {
+    if (!text) return null;
+
+    return text.split("&").map((part, index) => {
+      // Even indices are Arabic text, odd indices are inline math
+      if (index % 2 === 0) {
+        return (
+          <span key={index} dir="rtl">
+            {processTextFormatting(part)}
+          </span>
+        );
+      } else {
+        return (
+          <span key={index} dir="ltr">
+            <InlineMath math={part.trim()} />
+          </span>
+        );
+      }
+    });
+  };
+
+  // Function to parse the entire response
+  const parseResponse = (responseText) => {
+    if (!responseText) return null;
+
+    return responseText.split("$").map((segment, index) => {
+      // Even indices are mixed content (Arabic + inline math)
+      // Odd indices are block math equations
+      if (index % 2 === 0) {
+        return (
+          <div key={index} className="response-paragraph" dir="rtl">
+            {renderMixedContent(segment)}
+          </div>
+        );
+      } else {
+        return (
+          <div key={index} className="math-block" dir="ltr">
+            <BlockMath math={segment.trim()} />
+          </div>
+        );
+      }
+    });
+  };
+
+  console.log(data);
 
   return (
     <div className="container section-padding func-changes-container">
@@ -87,7 +176,7 @@ const FunctionChanges = () => {
           </div>
         </div>
       </div>
-      <a href="#function-changes-response">
+      <a dir="ltr" href="#function-changes-response">
         <button
           className={`generate gradient fade-in fade-in-4 `}
           disabled={requested}
@@ -124,42 +213,7 @@ const FunctionChanges = () => {
             </div>
           </div>
         ) : data ? (
-          <div className="response">
-            {data.split("**").map((item, index) => (
-              <div key={index} lang="ar" className="p-[10px, 0]">
-                {item.includes("#") ? (
-                  <h4 dir="ltr">
-                    {item.split("#").map((it, ind) => (
-                      <p key={ind}>
-                        <br />
-                        {it
-                          .replaceAll("-infinity", "-∞")
-                          .replaceAll("+infinity", "+∞")
-                          .replaceAll("^-", "⁻")
-                          .replaceAll("^+", "⁺")
-                          .replaceAll("->", "→")
-                          .replaceAll("^2", "²")
-                          .replaceAll("^3", "³")
-                          .replaceAll("sqrt", "√")}
-                      </p>
-                    ))}
-                  </h4>
-                ) : (
-                  <h4 className="eq">
-                    {item
-                      .replaceAll("-infinity", "-∞")
-                      .replaceAll("+infinity", "+∞")
-                      .replaceAll("^-", "⁻")
-                      .replaceAll("^+", "⁺")
-                      .replaceAll("->", "→")
-                      .replaceAll("^2", "²")
-                      .replaceAll("^3", "³")
-                      .replaceAll("sqrt", "√")}
-                  </h4>
-                )}
-              </div>
-            ))}
-          </div>
+          <div className="response">{parseResponse(data)}</div>
         ) : (
           <div className="mt-[20px]">حدث خطأ, يرجى المحاولة لاحقا</div>
         )
