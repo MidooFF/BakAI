@@ -11,10 +11,24 @@ const FunctionChanges = () => {
   const functionRef = useRef();
   const [func, setFunc] = useState("");
   const { data, loading, error, fetchData } = useFetch();
-  const [requested, setRequested] = useState(false);
+  const [requestAgain, setRequestAgain] = useState(0);
   const { toggleInfo } = useInfo();
+
+  const katexOptions = {
+    output: "html",
+    strict: false,
+    trust: false,
+    maxSize: Infinity,
+    maxExpand: 1000,
+    throwOnError: true,
+    errorColor: "#cc0000",
+    macros: {},
+    lineBreak: true, // Enable line breaks
+  };
+
   useEffect(() => {
-    if (func.length > 0) {
+    console.log("requesting");
+    if (func.length > 0 && requestAgain) {
       fetchData(
         `حلل تغيرات التابع ${func} باللغة العربية. التزم بالتعليمات التالية بدقة تامة:
 
@@ -31,9 +45,9 @@ const FunctionChanges = () => {
 
 3.  **مثال للإخراج (افترض ${func} = x^3 - 8):**`
       );
-      setRequested(true);
+      // setRequestAgain(requestAgain + 1);
     }
-  }, [func]);
+  }, [func, requestAgain]);
   const processTextFormatting = (text) => {
     if (!text) return null;
 
@@ -80,7 +94,7 @@ const FunctionChanges = () => {
       } else {
         return (
           <span key={index} dir="ltr">
-            <InlineMath math={part.trim()} />
+            <InlineMath settings={katexOptions} math={part.trim()} />
           </span>
         );
       }
@@ -103,7 +117,7 @@ const FunctionChanges = () => {
       } else {
         return (
           <div key={index} className="math-block" dir="ltr">
-            <BlockMath math={segment.trim()} />
+            <InlineMath settings={katexOptions} math={segment.trim()} />
           </div>
         );
       }
@@ -179,18 +193,18 @@ const FunctionChanges = () => {
       <a dir="ltr" href="#function-changes-response">
         <button
           className={`generate gradient fade-in fade-in-4 `}
-          disabled={requested}
           onClick={() => {
             if (!functionRef.current.value.length == 0) {
               setFunc(functionRef.current.value);
+              setRequestAgain(requestAgain + 1);
             }
           }}
         >
-          Generate
+          {requestAgain ? "reGenerate" : "Generate"}
         </button>
       </a>
 
-      {requested ? (
+      {requestAgain ? (
         loading ? (
           <div>
             {" "}
@@ -213,7 +227,11 @@ const FunctionChanges = () => {
             </div>
           </div>
         ) : data ? (
-          <div className="response">{parseResponse(data)}</div>
+          <div className="response">
+            <p>إذا كان الجواب غير واضح أو فيه رموز غريبة جرب إعادة المحاولة</p>
+            <br />
+            {parseResponse(data)}
+          </div>
         ) : (
           <div className="mt-[20px]">حدث خطأ, يرجى المحاولة لاحقا</div>
         )
