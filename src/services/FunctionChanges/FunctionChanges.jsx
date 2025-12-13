@@ -27,7 +27,6 @@ const FunctionChanges = () => {
   };
 
   useEffect(() => {
-    console.log("requesting");
     if (func.length > 0 && requestAgain) {
       fetchData(
         `حلل تغيرات التابع ${func} باللغة العربية. التزم بالتعليمات التالية بدقة تامة:
@@ -123,8 +122,6 @@ const FunctionChanges = () => {
       }
     });
   };
-
-  console.log(data);
 
   return (
     <div className="container section-padding func-changes-container">

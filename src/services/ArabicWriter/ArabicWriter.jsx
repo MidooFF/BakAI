@@ -28,15 +28,24 @@ const ArabicWriter = () => {
         mainIdea.current.value
       }, ${subIdeasData.map(
         (item, index) =>
-          `الفكرة ${index + 1}: ${item[0]}, شاهدها: ${item[1]}, الشاعر: ${
-            item[2]
-          }, اجعل كل شاهد في نهاية كل فكرة واذكر قبل كل شاهد شاعره (كما يقول الشاعر :) لا تضع عنوان للموضوع وأرسل الإجابة بهيئة HTML Elements حيث تكون المقدمة في عنصر والخاتمة في عنصر وكل فكرة في عنصر div`
-      )}`;
+          `${index + 1}: ${item[0]}, الشاهد: ${item[1]}, الشاعر: ${item[2]}`
+      )}, اكتب مقدمة وخاتمة مناسبة للموضوع, تأكد أن يكون ذكر الشاعر وشاهده في نهاية كل فكرة أي لا تذكر شيء عن الشاعر ولا شاهده حتى الأسطر الأخيرة من الفكرة `;
       fetchData(content);
       setRequested(true);
     }
   }, [subIdeasData]);
 
+  const renderText = (text) => {
+    return text.split("---").map((main) => {
+      return main.split("**").map((part, i) => {
+        if (i % 2 == 0) {
+          return <h3>{part}</h3>;
+        } else {
+          return <p className="bold text-[20px] mt-[20px]">{part}</p>;
+        }
+      });
+    });
+  };
   return (
     <>
       <div className="container section-padding">
@@ -112,7 +121,6 @@ const ArabicWriter = () => {
         </div>
         <button
           className={`add-sub-idea shadow-0 fade-in fade-in-3`}
-          disabled={requested}
           onClick={() => {
             setSubIdeas((prev) => [...prev, subIdeas.length]);
           }}
@@ -121,8 +129,8 @@ const ArabicWriter = () => {
         </button>
         <a href="#arabic-writer-response">
           <button
-            className={`generate gradient fade-in fade-in-4 `}
             disabled={requested}
+            className={`generate gradient fade-in fade-in-4 `}
             onClick={() => {
               if (!mainIdea.current.value) {
                 setInputError("يجب إدخال الفكرة الأساسية");
@@ -179,23 +187,7 @@ const ArabicWriter = () => {
             <div id="arabic-writer-response">{error}</div>
           ) : data ? (
             <div className="response" id="arabic-writer-response">
-              {data
-                .split("<div>")
-                .join()
-                .split("</div>")
-                .join("")
-                //   .split(",")
-                //   .join("||")
-                .split("<p>")
-                .join("")
-                .split("</p>")
-                //   .split("<section>")
-                //   .join("||")
-                //   .split("</section>")
-                //   .split("||")
-                .map((item, index) => (
-                  <div key={index}>{item}</div>
-                ))}
+              {renderText(data)}{" "}
             </div>
           ) : null
         ) : null}
