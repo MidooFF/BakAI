@@ -128,7 +128,7 @@ const FunctionChanges = () => {
       <div className="flex fade-in fade-in-1 justify-start max-sm:justify-between items-center">
         <h1 className="header fade-in fade-in-1">دراسة تغيرات التابع</h1>
         <IoInformationCircleOutline
-          className="text-2xl text-gray-500 cursor-pointer"
+          className="text-2xl text-gray-500 cursor-pointer mr-[20px]"
           onClick={() => {
             toggleInfo(
               <div>
