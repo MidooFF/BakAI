@@ -14,6 +14,7 @@ import { AuthProvider } from "../context/AuthContext.jsx";
 import { Atom } from "react-loading-indicators";
 import { BlackProvider } from "../context/BlackContext.jsx";
 import VPN from "./components/VPN/VPN.jsx";
+import ConsecutiveSteadyWrapper from "./services/ConsecutiveSteady/ConsecutiveSteadyWrapper.jsx";
 
 const useGeoLocation = () => {
   const [state, setState] = useState({
@@ -135,6 +136,15 @@ const ProtectedRoute = ({ children, isLoggedIn }) => {
             <>
               <Navbar />
               <FunctionChangesWrapper />
+            </>
+          }
+        />
+        <Route
+          path="/services/consecutive-steady"
+          element={
+            <>
+              <Navbar />
+              <ConsecutiveSteadyWrapper />
             </>
           }
         />

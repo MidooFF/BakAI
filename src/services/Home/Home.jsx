@@ -26,6 +26,7 @@ const Home = () => {
         </div>
         <p className="service-name text-2xl">كتابة موضوع تعبير</p>
       </div>
+
       <div
         onClick={() => {
           navigate("function-changes");
@@ -39,6 +40,21 @@ const Home = () => {
           <TbMathFunction className="text-white font-bold text-[30px]" />
         </div>
         <p className="service-name text-2xl">دراسة تغيرات التابع</p>
+      </div>
+
+      <div
+        onClick={() => {
+          navigate("consecutive-steady");
+        }}
+        className="service shadow-1 fade-in fade-in-3 bg-white text-center rounded-[15px] pb-[20px] pt-[30px] relative cursor-pointer"
+      >
+        <div
+          className="service-icon absolute w-[50px] h-[50px] top-[0] left-[50%] rounded-[15px] shadow-0 gradient 
+        translate-y-[-50%] translate-x-[-50%] flex justify-center items-center"
+        >
+          <h3 className="text-white font-bold text-[25px]">Un</h3>
+        </div>
+        <p className="service-name text-2xl">دراسة اطراد متتالية</p>
       </div>
     </div>
   );

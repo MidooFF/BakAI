@@ -1,19 +1,17 @@
 import React, { createRef, useEffect, useRef, useState } from "react";
 import parse from "html-react-parser";
-import "./FunctionChanges.css";
 import "../Services.css";
 import useFetch from "../../hooks/useFetch";
 import { useInfo } from "../../../context/InfoContext";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { InlineMath, BlockMath } from "react-katex";
 // study the changes of f(x) = (2x² + x + 7)/(x+1) and organize a table of them and translate the whole answer to arabic without showing the english response
-const FunctionChanges = () => {
-  const functionRef = useRef();
-  const [func, setFunc] = useState("");
+const ConsecutiveSteady = () => {
+  const consecutiveRef = useRef();
+  const [cons, setCons] = useState("");
   const { data, loading, error, fetchData } = useFetch();
   const [requestAgain, setRequestAgain] = useState(0);
   const { toggleInfo } = useInfo();
-
   const katexOptions = {
     output: "html",
     strict: false,
@@ -27,27 +25,22 @@ const FunctionChanges = () => {
   };
 
   useEffect(() => {
-    if (func.length > 0 && requestAgain) {
+    if (cons.length > 0 && requestAgain) {
       fetchData(
-        `حلل تغيرات التابع ${func} باللغة العربية. التزم بالتعليمات التالية بدقة تامة:
+        ` باللغة العربية. التزم بالتعليمات التالية بدقة تامة:
 
 1.  **التنسيق الرياضي:**
-    *   استخدم & قبل وبعد أي **رمز رياضي أو تعبير جبري قصير** مدمج في سياق الجملة. أمثلة: &R&, &−∞&, &x = 0&, &f(0) = -4&, &(-∞, 0)&, &f'(x) > 0&.
+    *   استخدم & قبل وبعد أي **رمز رياضي أو تعبير جبري قصير** مدمج في سياق الجملة. أمثلة: &\(n\ge0\)&, &&, &Un = 0&.
     *   استخدم $ قبل وبعد أي **معادلة أو صيغة رياضية رئيسية** تحتاج سطراً مستقلاً (مثل النهايات، إيجاد المشتقة الرئيسية، مقارنات).
-    *   **هام:** إذا كانت الصيغة الرياضية (مثل المشتقة &f'(x) = 3x^2&) قصيرة ويمكن دمجها في جملة، استخدم & بدلاً من $. استخدم $ فقط للصيغ التي تتطلب سطرها الخاص.
+    *   **هام:** إذا كانت الصيغة الرياضية (مثل المشتقة &\(U_{n+1}-U_n = \sqrt{3n+4}-\sqrt{3n+1}>0\)&) قصيرة ويمكن دمجها في جملة، استخدم & بدلاً من $. استخدم $ فقط للصيغ التي تتطلب سطرها الخاص.
     *   وتأكد أن لا يكون هناك عبارتان رياضيتان متتاليتان (أي لا يجب أن يكون هناك عبارتان محوطان ب& أو $ خلف بعض)(أي مرة نص عربي ومرة نص رياضي)
-    *   لا تستخدم أي علامات أو تنسيقات أخرى.
+    * لا تستخدم أي علامات أو تنسيقات أخرى.
 
 2.  **المحتوى المطلوب:**
-    *   أ) نهايات التابع عند الأطراف المفتوحة وصوره عند الأطراف المغلقة.
-    *   ب) استنتاج المقاربات (أفقية، شاقولية، مائلة) ودراسة الوضع النسبي.
-    *   ج) إيجاد مشتق التابع ودراسة تغيراته (تزايد، تناقص، قيم قصوى) **بدون** جدول.
-
-3.  **مثال للإخراج (افترض ${func} = x^3 - 8):**`
+    * ادرس اطراد المتتالية (Un)n>=0: ${cons} (متزايدة أو متناقصة أو ثابتة) وفق أحد هذه المعايير الثلاثة: 1: معيار الفرق Un+1 - Un, 2: معيار النسبة: Un+1/Un 3: معيار التابع (أي يمكن كتاية المتتالية بصيغة تابع ودراسة اطراده, استعمل المعيار الأسهل (لا داعي لتحلها بكل المعايير), ولكن إن أمكن كتابتها بصيغة تابع حلها باستخدام معيار التابع حتى إن لم يكن الأسهل`
       );
-      // setRequestAgain(requestAgain + 1);
     }
-  }, [func, requestAgain]);
+  }, [cons, requestAgain]);
   const processTextFormatting = (text) => {
     if (!text) return null;
 
@@ -127,7 +120,7 @@ const FunctionChanges = () => {
   return (
     <div className="container section-padding func-changes-container">
       <div className="flex fade-in fade-in-1 justify-start max-sm:justify-between items-center">
-        <h1 className="header fade-in fade-in-1">دراسة تغيرات التابع</h1>
+        <h1 className="header fade-in fade-in-1">دراسة اطراد متتالية: </h1>
         <IoInformationCircleOutline
           className="text-2xl text-gray-500 cursor-pointer mr-[20px]"
           onClick={() => {
@@ -147,6 +140,13 @@ const FunctionChanges = () => {
                 <p>مثال:</p>
                 <p>جذر المقدار x + 1 يكتب:</p>
                 <p>(x+1)√</p>
+                <br />
+                <p>لكتابة متتالية بصيغة الحد العام: </p>
+                <p>Un = √(3n + 1)</p>
+                <p>لكتابة متتالية بالتدريج: </p>
+                <p>U0 = 1, Un+1 = 2Un</p>
+                <p>لكتابة متتالية مجاميع: </p>
+                <p>Un = 1/(n+1) + 1/(n+2) + ,,, + 1/2n</p>
               </div>
             );
           }}
@@ -154,36 +154,36 @@ const FunctionChanges = () => {
       </div>
 
       <div className="main-form fade-in fade-in-2 max-sm:flex-row">
-        <h2 className="mb-[10px]">التابع:</h2>
+        <h2 className="mb-[10px]">المتتالية:</h2>
         <div className="flex gap-[10px] ">
           <div className="main-input">
-            <input dir="ltr" ref={functionRef} />
+            <input dir="ltr" ref={consecutiveRef} />
             <div></div>
           </div>
-          <h2>:f(x)</h2>
+          <h2 dir="ltr">(Un)n≥0:</h2>
         </div>
       </div>
       <div className="shortcuts fade-in fade-in-3">
         <button
           onClick={() => {
-            functionRef.current.value = functionRef.current.value + "²";
-            functionRef.current.focus();
+            consecutiveRef.current.value = consecutiveRef.current.value + "²";
+            consecutiveRef.current.focus();
           }}
         >
           ²
         </button>
         <button
           onClick={() => {
-            functionRef.current.value = functionRef.current.value + "³";
-            functionRef.current.focus();
+            consecutiveRef.current.value = consecutiveRef.current.value + "³";
+            consecutiveRef.current.focus();
           }}
         >
           ³
         </button>
         <button
           onClick={() => {
-            functionRef.current.value = functionRef.current.value + "√";
-            functionRef.current.focus();
+            consecutiveRef.current.value = consecutiveRef.current.value + "√";
+            consecutiveRef.current.focus();
           }}
         >
           √
@@ -193,8 +193,8 @@ const FunctionChanges = () => {
         <button
           className={`generate gradient fade-in fade-in-4 `}
           onClick={() => {
-            if (!functionRef.current.value.length == 0) {
-              setFunc(functionRef.current.value);
+            if (!consecutiveRef.current.value.length == 0) {
+              setCons(consecutiveRef.current.value);
               setRequestAgain(requestAgain + 1);
             }
           }}
@@ -239,4 +239,4 @@ const FunctionChanges = () => {
   );
 };
 
-export default FunctionChanges;
+export default ConsecutiveSteady;
