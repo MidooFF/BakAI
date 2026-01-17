@@ -41,12 +41,12 @@ const useGeoLocation = () => {
         });
       } catch (error) {
         setState({
-          loading: true,
+          loading: false,
           error: error.message,
           geoInfo: null,
           isBlockedRegion: false,
         });
-        console.log("failed to fetch geo info: ", err);
+        console.log("failed to fetch geo info: ", error);
       }
     };
     fetchGeoInfo();
@@ -104,6 +104,7 @@ const AppRoutes = () => {
 
 const ProtectedRoute = ({ children, isLoggedIn }) => {
   if (!isLoggedIn) {
+    console.log(isLoggedIn);
     return <Navigate to="/login" />;
   }
   return (
@@ -118,6 +119,7 @@ const ProtectedRoute = ({ children, isLoggedIn }) => {
             </>
           }
         />
+        <Route path="/" element={<Navigate to="/services" />} />
         <Route
           path="/services/arabic-writer"
           element={

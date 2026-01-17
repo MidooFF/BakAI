@@ -29,6 +29,7 @@ const Login = () => {
       setPasswordError("");
     }
     setLoading(true);
+    console.log("running");
     try {
       const response = await axios.post(
         "https://bacai-backend.onrender.com/auth",
@@ -45,8 +46,8 @@ const Login = () => {
       setIsLoggedIn(true);
 
       navigate("/services");
+      console.log("login succeed");
     } catch (err) {
-      console.log(err);
       if (err.status == 401) {
         setUsernameError("هذا الاسم غير مسجل في قاعدة البيانات");
       } else if (err.status == 403) {
